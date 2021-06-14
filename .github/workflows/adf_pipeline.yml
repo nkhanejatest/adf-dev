@@ -46,13 +46,21 @@ jobs:
             .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
           azPSVersion: 3.1.0
 
-      - name: Run ARM deploy
-        uses: azure/arm-deploy@v1
+      - name: Deploy ADF Artifacts
+        uses: azure/CLI@v1
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: /adf/git-dev-adf/ARMTemplateForFactory.json
-          parameters: factoryName='git-uat-adf' AzureBlobStorage1_connectionString='DefaultEndpointsProtocol=https;AccountName=storagenk2;AccountKey=bjjHhhKPsBJTmdTzCgXRGAA9grIG33Jqad5qEwBTwLcRo3db67Zx93tqkQ3qFejdWIWep64A4FTkNYfmyiWRDA==;EndpointSuffix=core.windows.net' AzureBlobStorage2_connectionString='DefaultEndpointsProtocol=https;AccountName=storagenk3;AccountKey=sayb2ruOacYHU5DbYrFjSR5urlqwPLeaVtYozIsvRknEks0mp9ANdLplD9n3rSm96Jgfebj80kOWLbjdBpsdfw==;EndpointSuffix=core.windows.net'
+          inlineScript: |
+            az deployment group create --resource-group ${{ secrets.AZURE_RG }} --template-file $GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters @$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters factoryName="git-uat-adf" AzureBlobStorage1_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk2;AccountKey=bjjHhhKPsBJTmdTzCgXRGAA9grIG33Jqad5qEwBTwLcRo3db67Zx93tqkQ3qFejdWIWep64A4FTkNYfmyiWRDA==;EndpointSuffix=core.windows.net" AzureBlobStorage2_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk3;AccountKey=sayb2ruOacYHU5DbYrFjSR5urlqwPLeaVtYozIsvRknEks0mp9ANdLplD9n3rSm96Jgfebj80kOWLbjdBpsdfw==;EndpointSuffix=core.windows.net"
+
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1
+        with:
+          inlineScript: |
+            [String] $path= $env:GITHUB_WORKSPACE
+            Write-Host $path
+            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $true
+          azPSVersion: 3.1.0
+
 
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
