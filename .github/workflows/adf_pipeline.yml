@@ -40,5 +40,5 @@ jobs:
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
-          inlineScript: .\$GITHUB_WORKSPACE\main/cicd.ps1 -armTemplate "$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
+          inlineScript: .\main/cicd.ps1 -armTemplate "$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
           azPSVersion: 3.1.0
