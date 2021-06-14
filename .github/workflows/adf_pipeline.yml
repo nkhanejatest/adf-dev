@@ -45,3 +45,11 @@ jobs:
             Write-Host $path
             .\main/cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
           azPSVersion: 3.1.0
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1
+        with:
+          inlineScript: |
+            [String] $path= $env:GITHUB_WORKSPACE
+            Write-Host $path
+            .\main/cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $true
+          azPSVersion: 3.1.0
