@@ -27,20 +27,19 @@ jobs:
           ref: adf_publish
           path: adf
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Inspect GitHub workflows
+        run: ls -la $GITHUB_WORKSPACE/
+        shell: bash
 
       - name: Log in with Azure
         uses: azure/login@v1
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           enable-AzPSSession: true
-      - name: Inspect GitHub workflows
-        run: ls -la $GITHUB_WORKSPACE/
-        shell: bash
+
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
-          inlineScript: Get-AzResourceGroup -Name "datafactory"
+          inlineScript: .\$GITHUB_WORKSPACE\main/cicd.ps1
+          ScriptArguments: '-armTemplate "$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false'
           azPSVersion: 3.1.0
