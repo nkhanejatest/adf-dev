@@ -3,7 +3,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches:
-      - adf_publish
+      - UAT
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
-          ref: master
+          ref: UAT
           path: main
       - uses: actions/checkout@v2
         with:
@@ -43,7 +43,7 @@ jobs:
           inlineScript: |
             [String] $path= $env:GITHUB_WORKSPACE
             Write-Host $path
-            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
+            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName ${{ secrets.AZURE_RG }} -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
           azPSVersion: 3.1.0
 
       - name: Deploy ADF Artifacts
@@ -58,15 +58,5 @@ jobs:
           inlineScript: |
             [String] $path= $env:GITHUB_WORKSPACE
             Write-Host $path
-            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $true
-          azPSVersion: 3.1.0
-
-
-      - name: Azure PowerShell Action
-        uses: Azure/powershell@v1
-        with:
-          inlineScript: |
-            [String] $path= $env:GITHUB_WORKSPACE
-            Write-Host $path
-            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName datafactory -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $true
+            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName ${{ secrets.AZURE_RG }} -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $true
           azPSVersion: 3.1.0
