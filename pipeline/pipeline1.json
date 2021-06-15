@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1 task5",
+				"name": "Copy data1 cicd",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
