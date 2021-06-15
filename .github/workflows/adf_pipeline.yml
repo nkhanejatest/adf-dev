@@ -1,4 +1,4 @@
-name: Azure_data_factory_uat_deploy
+name: Azure_data_factory_uat_env_deploy
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
