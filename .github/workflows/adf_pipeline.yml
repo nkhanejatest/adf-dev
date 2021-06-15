@@ -1,10 +1,9 @@
-name: Azure_data_factory_uat_env_deploy
+name: Azure_data_factory_prod_deploy
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches:
-      - UAT
-
+      - PROD
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -20,7 +19,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
-          ref: UAT
+          ref: PROD
           path: main
       - uses: actions/checkout@v2
         with:
@@ -43,20 +42,20 @@ jobs:
           inlineScript: |
             [String] $path= $env:GITHUB_WORKSPACE
             Write-Host $path
-            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName ${{ secrets.AZURE_RG }} -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
+            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName ${{ secrets.AZURE_RG }} -DataFactoryName "git-prod-adf" -predeployment $true -deleteDeployment $false
           azPSVersion: 3.1.0
 
-      - name: Deploying Artifacts to UAT ADF
+      - name: Deploying Artifacts to PROD ADF
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az deployment group create --resource-group ${{ secrets.AZURE_RG }} --template-file $GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters @$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters factoryName="git-uat-adf" AzureBlobStorage1_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk2;AccountKey=bjjHhhKPsBJTmdTzCgXRGAA9grIG33Jqad5qEwBTwLcRo3db67Zx93tqkQ3qFejdWIWep64A4FTkNYfmyiWRDA==;EndpointSuffix=core.windows.net" AzureBlobStorage2_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk3;AccountKey=sayb2ruOacYHU5DbYrFjSR5urlqwPLeaVtYozIsvRknEks0mp9ANdLplD9n3rSm96Jgfebj80kOWLbjdBpsdfw==;EndpointSuffix=core.windows.net"
+            az deployment group create --resource-group ${{ secrets.AZURE_RG }} --template-file $GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters @$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters factoryName="git-prod-adf" AzureBlobStorage1_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk2;AccountKey=bjjHhhKPsBJTmdTzCgXRGAA9grIG33Jqad5qEwBTwLcRo3db67Zx93tqkQ3qFejdWIWep64A4FTkNYfmyiWRDA==;EndpointSuffix=core.windows.net" AzureBlobStorage2_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk3;AccountKey=sayb2ruOacYHU5DbYrFjSR5urlqwPLeaVtYozIsvRknEks0mp9ANdLplD9n3rSm96Jgfebj80kOWLbjdBpsdfw==;EndpointSuffix=core.windows.net"
 
-      - name: Clean Resources and Start Triggers
+      - name: Clean Resources and Starting Triggers
         uses: Azure/powershell@v1
         with:
           inlineScript: |
             [String] $path= $env:GITHUB_WORKSPACE
             Write-Host $path
-            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName ${{ secrets.AZURE_RG }} -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $true
+            .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName  ${{ secrets.AZURE_RG }} -DataFactoryName "git-prod-adf" -predeployment $true -deleteDeployment $true
           azPSVersion: 3.1.0
