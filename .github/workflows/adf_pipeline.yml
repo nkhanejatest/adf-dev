@@ -1,4 +1,4 @@
-name: Azure_data_factory_deploy
+name: Azure_data_factory_uat_deploy
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -37,7 +37,7 @@ jobs:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           enable-AzPSSession: true
 
-      - name: Azure PowerShell Action
+      - name: Stopping Triggers
         uses: Azure/powershell@v1
         with:
           inlineScript: |
@@ -46,13 +46,13 @@ jobs:
             .\main\cicd.ps1 -armTemplate "$path/adf/git-dev-adf/ARMTemplateForFactory.json" -ResourceGroupName ${{ secrets.AZURE_RG }} -DataFactoryName "git-uat-adf" -predeployment $true -deleteDeployment $false
           azPSVersion: 3.1.0
 
-      - name: Deploy ADF Artifacts
+      - name: Deploying Artifacts to UAT ADF
         uses: azure/CLI@v1
         with:
           inlineScript: |
             az deployment group create --resource-group ${{ secrets.AZURE_RG }} --template-file $GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters @$GITHUB_WORKSPACE/adf/git-dev-adf/ARMTemplateForFactory.json --parameters factoryName="git-uat-adf" AzureBlobStorage1_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk2;AccountKey=bjjHhhKPsBJTmdTzCgXRGAA9grIG33Jqad5qEwBTwLcRo3db67Zx93tqkQ3qFejdWIWep64A4FTkNYfmyiWRDA==;EndpointSuffix=core.windows.net" AzureBlobStorage2_connectionString="DefaultEndpointsProtocol=https;AccountName=storagenk3;AccountKey=sayb2ruOacYHU5DbYrFjSR5urlqwPLeaVtYozIsvRknEks0mp9ANdLplD9n3rSm96Jgfebj80kOWLbjdBpsdfw==;EndpointSuffix=core.windows.net"
 
-      - name: Azure PowerShell Action
+      - name: Clean Resources and Start Triggers
         uses: Azure/powershell@v1
         with:
           inlineScript: |
