@@ -13,11 +13,13 @@ jobs:
         
       - name: Add lock
         run: |
-          curl --location --request PUT 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection' \
-          --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-          --header 'Authorization: Bearer {{ secrets.PAT }}' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
+          wget --no-check-certificate --quiet \
+              --method PUT \
+              --timeout=0 \
+              --header 'Accept: application/vnd.github.luke-cage-preview+json' \
+              --header 'Authorization: Bearer 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' \
+              --header 'Content-Type: application/json' \
+              --body-data '{
               "required_status_checks": {
                   "strict": false,
                   "contexts": [
@@ -39,6 +41,7 @@ jobs:
                   "teams": [],
                   "apps": []
               }
-          }'
+          }' \
+               'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection'
         shell: bash
           
