@@ -13,10 +13,9 @@ jobs:
         
       - name: Add lock
         run: |
-          cat  $GITHUB_EVENT_PATH
           curl --location --request PUT 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection' \
           --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-          --header 'Authorization: Bearer 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' \
+          --header 'Authorization: Bearer {{ secrets.PAT }}' \
           --header 'Content-Type: application/json' \
           --data-raw '{
               "required_status_checks": {
