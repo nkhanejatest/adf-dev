@@ -11,37 +11,38 @@ jobs:
         run: cat  $GITHUB_EVENT_PATH
         shell: bash
         
-      - name: Add lock
+      - name: Add Lock
+        shell: pwsh
         run: |
-          wget --no-check-certificate --quiet \
-              --method PUT \
-              --timeout=0 \
-              --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-              --header 'Authorization: Bearer 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' \
-              --header 'Content-Type: application/json' \
-              --body-data '{
-              "required_status_checks": {
-                  "strict": false,
-                  "contexts": [
-                      "contexts"
-                  ]
-              },
-              "enforce_admins": false,
-              "required_pull_request_reviews": {
-                  "dismissal_restrictions": {
-                      "users": [],
-                      "teams": []
-                  },
-                  "dismiss_stale_reviews": false,
-                  "require_code_owner_reviews": false,
-                  "required_approving_review_count": 1
-              },
-              "restrictions": {
-                  "users": [],
-                  "teams": [],
-                  "apps": []
-              }
-          }' \
-               'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection'
-        shell: bash
-          
+          $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+          $headers.Add("Accept", "application/vnd.github.luke-cage-preview+json")
+          $headers.Add("Authorization", "Bearer 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")
+          $headers.Add("Content-Type", "application/json")
+
+          $body = "{
+          `n    `"required_status_checks`": {
+          `n        `"strict`": false,
+          `n        `"contexts`": [
+          `n            `"contexts`"
+          `n        ]
+          `n    },
+          `n    `"enforce_admins`": false,
+          `n    `"required_pull_request_reviews`": {
+          `n        `"dismissal_restrictions`": {
+          `n            `"users`": [],
+          `n            `"teams`": []
+          `n        },
+          `n        `"dismiss_stale_reviews`": false,
+          `n        `"require_code_owner_reviews`": false,
+          `n        `"required_approving_review_count`": 1
+          `n    },
+          `n    `"restrictions`": {
+          `n        `"users`": [],
+          `n        `"teams`": [],
+          `n        `"apps`": []
+          `n    }
+          `n}"
+
+          $response = Invoke-RestMethod 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection' -Method 'PUT' -Headers $headers -Body $body
+          $response | ConvertTo-Json
+
