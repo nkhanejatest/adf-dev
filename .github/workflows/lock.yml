@@ -16,7 +16,7 @@ jobs:
         run: |
           $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
           $headers.Add("Accept", "application/vnd.github.luke-cage-preview+json")
-          $headers.Add("Authorization", "Bearer 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")
+          $headers.Add("Authorization", "Bearer {{ secrets.PAT }}")
           $headers.Add("Content-Type", "application/json")
 
           $body = "{
