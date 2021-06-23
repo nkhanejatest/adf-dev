@@ -14,35 +14,32 @@ jobs:
       - name: Add lock
         run: |
           cat  $GITHUB_EVENT_PATH
-          wget --no-check-certificate --quiet \
-          --method PUT \
-          --timeout=0 \
+          curl --location --request PUT 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection' \
           --header 'Accept: application/vnd.github.luke-cage-preview+json' \
           --header 'Authorization: Bearer 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' \
           --header 'Content-Type: application/json' \
-          --body-data '{
-            "required_status_checks": {
-                "strict": false,
-                "contexts": [
-                    "contexts"
-                ]
-            },
-            "enforce_admins": false,
-            "required_pull_request_reviews": {
-                "dismissal_restrictions": {
-                    "users": [],
-                    "teams": []
-                },
-                "dismiss_stale_reviews": false,
-                "require_code_owner_reviews": false,
-                "required_approving_review_count": 1
-            },
-            "restrictions": {
-                "users": [],
-                "teams": [],
-                "apps": []
-            }
-          }' \
-             'https://api.github.com/repos/nkhanejatest/adf-dev/branches/master/protection'
+          --data-raw '{
+              "required_status_checks": {
+                  "strict": false,
+                  "contexts": [
+                      "contexts"
+                  ]
+              },
+              "enforce_admins": false,
+              "required_pull_request_reviews": {
+                  "dismissal_restrictions": {
+                      "users": [],
+                      "teams": []
+                  },
+                  "dismiss_stale_reviews": false,
+                  "require_code_owner_reviews": false,
+                  "required_approving_review_count": 1
+              },
+              "restrictions": {
+                  "users": [],
+                  "teams": [],
+                  "apps": []
+              }
+          }'
         shell: bash
           
