@@ -7,10 +7,6 @@ param
     [parameter(Mandatory = $false)] [Bool] $deleteDeployment=$false
 )
 
-
-
-
-
 function getPipelineDependencies {
     param([System.Object] $activity)
     if ($activity.Pipeline) {
