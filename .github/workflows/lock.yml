@@ -16,6 +16,8 @@ jobs:
         run: |
           echo "GITHUB_SHA is ${{ github.sha }}"
           echo "GITHUB_REF is ${{ github.ref }}"
+          echo "GITHUB_REF is ${{ github.head_ref }}"
+          echo "GITHUB_REF is ${{ github.base_ref }}"
         
       - name: Add Lock
         shell: pwsh
