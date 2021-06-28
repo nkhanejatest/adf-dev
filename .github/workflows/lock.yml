@@ -11,6 +11,21 @@ jobs:
         run: cat  $GITHUB_EVENT_PATH
         shell: bash
         
+      - name: Getting event powershell
+        run: $GITHUB_EVENT_PATH
+        shell: pwsh
+        
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      
+      - name: run build
+        run: |
+          echo "GITHUB_SHA is ${{ github.sha }}"
+          echo "GITHUB_REF is ${{ github.ref }}"
+          echo "${{ github.event.ref }} - ${{ github.event.ref_type }}"
+        
       - name: Add Lock
         shell: pwsh
         run: |
