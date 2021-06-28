@@ -51,6 +51,6 @@ jobs:
           `n    }
           `n}"
 
-          $response = Invoke-RestMethod 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/myfeature/protection' -Method 'PUT' -Headers $headers -Body $body
+          $response = Invoke-RestMethod 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/${{ github.head_ref }}/protection' -Method 'PUT' -Headers $headers -Body $body
           $response | ConvertTo-Json
 
