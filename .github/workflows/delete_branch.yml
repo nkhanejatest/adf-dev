@@ -1,7 +1,7 @@
 name: Main Branch Delete-Feature Workflow
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ Main ]
     types: [closed]
 jobs:
   delete_job:
