@@ -1,25 +1,15 @@
-name: CI
+name: Feature locking branch on Party merge
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ party ]
     types: [closed]
 jobs:
   merge_job:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Getting event
-        run: cat  $GITHUB_EVENT_PATH
-        shell: bash
-
-      - name: run build
-        run: |
-          echo "GITHUB_SHA is ${{ github.sha }}"
-          echo "GITHUB_REF is ${{ github.ref }}"
-          echo "GITHUB_REF is ${{ github.head_ref }}"
-          echo "GITHUB_REF is ${{ github.base_ref }}"
         
-      - name: Add Lock
+      - name: Add Lock on Feature Branch
         shell: pwsh
         run: |
           $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
