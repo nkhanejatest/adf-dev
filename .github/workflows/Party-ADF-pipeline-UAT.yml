@@ -2,14 +2,14 @@ name: Party_ADF_Pipeline_UAT_Deploy
 on:
   push:
     branches:
-      - Party
+      - party
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: Party
+          ref: party
 
       - name: Inspect GitHub workflows
         run: ls -la $GITHUB_WORKSPACE/
