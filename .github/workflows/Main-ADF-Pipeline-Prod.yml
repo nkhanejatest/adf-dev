@@ -2,7 +2,7 @@ name: Main_ADF_Pipeline_Prod_Deploy
 on:
   push:
     branches:
-      - Main
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
