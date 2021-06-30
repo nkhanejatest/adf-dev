@@ -1,0 +1,27 @@
+name: Party_ADF_Pipeline_UAT_Deploy
+on:
+  push:
+    branches:
+      - Party
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: Party
+
+      - name: Inspect GitHub workflows
+        run: ls -la $GITHUB_WORKSPACE/
+        shell: bash
+
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          enable-AzPSSession: true
+          
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
