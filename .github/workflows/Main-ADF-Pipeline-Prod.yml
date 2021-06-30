@@ -2,14 +2,14 @@ name: Main_ADF_Pipeline_Prod_Deploy
 on:
   push:
     branches:
-      - main
+      - Main
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: main
+          ref: Main
 
       - name: Inspect GitHub workflows
         run: ls -la $GITHUB_WORKSPACE/
