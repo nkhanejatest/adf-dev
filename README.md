@@ -1,4 +1,4 @@
-��# adf-dev-test-feature
+��# adf-dev-test-feature-fail
 reset with master
 
 git checkout party
