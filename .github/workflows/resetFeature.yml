@@ -5,6 +5,13 @@ jobs:
   sync_job:
     runs-on: ubuntu-latest
     steps:
+      - name: Delete Lock on Feature Branch
+        shell: pwsh
+        run: |
+          $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+          $headers.Add("Authorization", "Bearer ${{ secrets.PAT }}")
+          $response = Invoke-RestMethod 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/${{ secrets.feature_branch_name }}/protection' -Method 'DELETE' -Headers $headers
+          $response | ConvertTo-Json     
       - uses: actions/checkout@v2
         with:
           ref: party
@@ -14,10 +21,3 @@ jobs:
           git reset --hard origin/main
           git clean -f -d 
           git push origin party --force
-      - name: Delete Lock on Feature Branch
-        shell: pwsh
-        run: |
-          $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-          $headers.Add("Authorization", "Bearer ${{ secrets.PAT }}")
-          $response = Invoke-RestMethod 'https://api.github.com/repos/nkhanejatest/adf-dev/branches/${{ secrets.feature_branch_name }}/protection' -Method 'DELETE' -Headers $headers
-          $response | ConvertTo-Json     
