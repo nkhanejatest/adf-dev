@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: Main
+          ref: main
 
       - name: Inspect GitHub workflows
         run: ls -la $GITHUB_WORKSPACE/
