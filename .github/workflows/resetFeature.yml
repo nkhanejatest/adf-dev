@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: party
+          token: ${{ secrets.PAT }}
       - name: Resetting the party branch
         run: |
           git fetch origin
