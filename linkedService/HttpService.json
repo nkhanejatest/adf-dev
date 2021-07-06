@@ -1,0 +1,12 @@
+{
+	"name": "HttpService",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://nkhaneja013.sharepoint.com/_api/web/GetFileByServerRelativeUrl('sites/test-site/Shared Documents/POC/test.xlsx')/$value",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
