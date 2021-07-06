@@ -20,7 +20,7 @@
 					"headers": {
 						"Content-Type": "application/x-www-form-urlencoded"
 					},
-					"body": "grant_type=client_credentials&client_id=8f87b28d-12f5-4e9c-8cf6-ae5d0a0d9130@042f413b-53fe-4c93-a04b-ab353eb6b2c4&client_secret=yslt2uhq2-3..qV62-dzi7qn7L41dN9C3D&resource=00000003-0000-0ff1-ce00-000000000000/nkhaneja013.sharepoint.com@[Tenant-ID]"
+					"body": "grant_type=client_credentials&client_id=8f87b28d-12f5-4e9c-8cf6-ae5d0a0d9130@042f413b-53fe-4c93-a04b-ab353eb6b2c4&client_secret=yslt2uhq2-3..qV62-dzi7qn7L41dN9C3D&resource=00000003-0000-0ff1-ce00-000000000000/nkhaneja013.sharepoint.com@042f413b-53fe-4c93-a04b-ab353eb6b2c4"
 				}
 			},
 			{
