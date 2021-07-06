@@ -1,6 +1,52 @@
 {
 	"name": "sharepoint",
 	"properties": {
+		"activities": [
+			{
+				"name": "WebActivity",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://accounts.accesscontrol.windows.net/042f413b-53fe-4c93-a04b-ab353eb6b2c4/tokens/OAuth/2",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"body": "grant_type=client_credentials&client_id=8f87b28d-12f5-4e9c-8cf6-ae5d0a0d9130@042f413b-53fe-4c93-a04b-ab353eb6b2c4&client_secret=yslt2uhq2-3..qV62-dzi7qn7L41dN9C3D&resource=00000003-0000-0ff1-ce00-000000000000/nkhaneja013.sharepoint.com@[Tenant-ID]"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "WebActivity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			}
+		],
 		"annotations": []
 	}
 }
